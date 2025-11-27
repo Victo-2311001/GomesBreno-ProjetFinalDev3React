@@ -12,13 +12,7 @@ export default function Fiche(props: IFiche) {
 
   const ajouterAuxFavoris = () => {
     //if (favoris.find((f) => f.id === props.combattant.id)) return;
-    const nouvelles = [
-      ...favoris,
-      {
-        id: props.combattant.id,
-        nom: props.combattant.nom,
-        prenom: props.combattant.prenom,
-      },
+    const nouvelles = [ ...favoris, { id: props.combattant.id, nom: props.combattant.nom, prenom: props.combattant.prenom,},
     ];
     setFavoris(nouvelles);
     setFavorisOuvert(true);

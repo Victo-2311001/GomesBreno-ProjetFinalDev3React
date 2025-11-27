@@ -3,7 +3,8 @@ import { useContext } from 'react';
 import { CombattantContext } from '../contexts/favoris.context';
 
 export default function Favoris() {
-  const { favoris, favorisOuvert, setFavorisOuvert } = useContext(CombattantContext);
+  const { favoris, favorisOuvert, setFavorisOuvert } = 
+  useContext(CombattantContext);
   return (
     <>
       {favorisOuvert && <div className="fixed inset-0 z-40 bg-black bg-opacity-50 transition-opacity" />}

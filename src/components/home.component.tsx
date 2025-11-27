@@ -16,7 +16,7 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get('combattantsapi-hyghhjcae9dcdgav.canadacentral-01.azurewebsites.net/api/combattants/all')
+      .get('https://combattantsapi-hyghhjcae9dcdgav.canadacentral-01.azurewebsites.net/api/combattants/all')
       .then((response) => {
         // eslint-disable-next-line no-console
         console.debug('API combattants response (axios):', response.data);
@@ -39,7 +39,7 @@ export default function Home() {
     <div className="min-h-screen bg-gray-100">
       <header className="bg-white shadow sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-900">UFC Fighters TEST</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Combattants UFC</h1>
           <button onClick={toggleFavoris} className="relative p-2 text-gray-600 hover:text-gray-900 transition-colors">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.993 3.055A9.001 9.001 0 2 0 19.102 4.996M9 6h.01M15 6h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
