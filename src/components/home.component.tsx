@@ -16,7 +16,7 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get('/api/combattants/all')
+      .get('combattantsapi-hyghhjcae9dcdgav.canadacentral-01.azurewebsites.net/api/combattants/all')
       .then((response) => {
         // eslint-disable-next-line no-console
         console.debug('API combattants response (axios):', response.data);
