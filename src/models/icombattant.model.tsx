@@ -13,9 +13,10 @@ export interface ICombattant {
   age: number;
   nationalite: string;
   categorie: string;
-  victoire: number;
+  victoires: number;
   defaites: number;
   ufcChampion: boolean;
   techniqueFavorite: string[];
+  urlImage?: string;
   matchRecents: IMatchesRecents[]
 }

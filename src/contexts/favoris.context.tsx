@@ -4,6 +4,7 @@ export interface ICombattantFavori {
   id: string;
   nom: string;
   prenom: string;
+  urlImage?: string;
 }
 
 export type CombattantContextType = {

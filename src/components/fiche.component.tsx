@@ -1,6 +1,15 @@
 import { useContext } from 'react';
 import { CombattantContext } from '../contexts/favoris.context';
 import type { ICombattant } from '../models/icombattant.model';
+import {
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Typography,
+  Button,
+  Box,
+} from '@mui/material';
 
 interface IFiche {
   combattant: ICombattant;
@@ -11,8 +20,14 @@ export default function Fiche(props: IFiche) {
   const { favoris, setFavoris, setFavorisOuvert } = useContext(CombattantContext);
 
   const ajouterAuxFavoris = () => {
-    //if (favoris.find((f) => f.id === props.combattant.id)) return;
-    const nouvelles = [ ...favoris, { id: props.combattant.id, nom: props.combattant.nom, prenom: props.combattant.prenom,},
+    const nouvelles = [
+      ...favoris,
+      {
+        id: props.combattant.id,
+        nom: props.combattant.nom,
+        prenom: props.combattant.prenom,
+        urlImage: props.combattant.urlImage,
+      },
     ];
     setFavoris(nouvelles);
     setFavorisOuvert(true);
@@ -23,49 +38,95 @@ export default function Fiche(props: IFiche) {
     setFavoris(nouvelles);
   };
 
+
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-      {(props.combattant as any) && (
-        <div className="h-48 bg-gray-200 overflow-hidden">
-          <img
-            src={(props.combattant as any).photo}
-            alt={`${props.combattant.prenom} ${props.combattant.nom}`}
-            className="w-full h-full object-cover"
-          />
-        </div>
+    <Card
+      sx={{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        transition: 'box-shadow 0.3s',
+        '&:hover': {
+          boxShadow: 6,
+        },
+      }}
+    >
+      {(props.combattant as any).urlImage && (
+        <CardMedia
+          component="img"
+          height="192"
+          image={(props.combattant as any).urlImage}
+          alt={`${props.combattant.prenom} ${props.combattant.nom}`}
+          sx={{ objectFit: 'cover', bgcolor: 'grey.200' }}
+        />
       )}
-      <div className="p-4">
-        <h3 className="text-lg font-semibold text-gray-900 mb-1">
+
+      <CardContent sx={{ flexGrow: 1, pb: 1 }}>
+        <Typography variant="h6" component="h3" gutterBottom fontWeight="semibold">
           {props.combattant.prenom} {props.combattant.nom}
-        </h3>
+        </Typography>
+
         {props.combattant.surnom && (
-          <p className="text-sm text-gray-500 italic mb-2">"{props.combattant.surnom}"</p>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            fontStyle="italic"
+            gutterBottom
+          >
+            "{props.combattant.surnom}"
+          </Typography>
         )}
-        <div className="mb-3 space-y-1 text-sm text-gray-600">
-          <p>
-            <span className="font-medium">Nationalité:</span> {props.combattant.nationalite}
-          </p>
-          <p>
-            <span className="font-medium">Catégorie:</span> {props.combattant.categorie}
-          </p>
-          <p>
-            <span className="font-medium">Âge:</span> {props.combattant.age} ans
-          </p>
-          <p className="text-green-600 font-medium">W: {props.combattant.victoire} - L: {props.combattant.defaites}</p>
-        </div>
-      </div>
-      <div className="px-4 pb-4">
-        {!props.enFavoris && (
-          <button onClick={ajouterAuxFavoris} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition-colors">
-            ⭐ Ajouter aux favoris
-          </button>
+
+        <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+          <Typography variant="body2" color="text.secondary">
+            <Box component="span" fontWeight="medium">Nationalité:</Box>{' '}
+            {props.combattant.nationalite}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            <Box component="span" fontWeight="medium">Catégorie:</Box>{' '}
+            {props.combattant.categorie}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            <Box component="span" fontWeight="medium">Âge:</Box>{' '}
+            {props.combattant.age} ans
+          </Typography>
+          <Box sx={{ mt: 1, display: 'flex', gap: 0.5, alignItems: 'center' }}>
+            <Typography variant="body2" fontWeight="medium" color="success.main">
+              W: {props.combattant.victoires}
+            </Typography>
+            <Typography variant="body2" fontWeight="medium">
+              -
+            </Typography>
+            <Typography variant="body2" fontWeight="medium" color="error.main">
+              L: {props.combattant.defaites}
+            </Typography>
+          </Box>
+        </Box>
+      </CardContent>
+
+      <CardActions sx={{ p: 2, pt: 0 }}>
+        {!props.enFavoris ? (
+          <Button
+            fullWidth
+            variant="contained"
+            onClick={ajouterAuxFavoris}
+          >
+            Ajouter aux favoris
+          </Button>
+        ) : (
+          <Button
+            fullWidth
+            variant="contained"
+            color="error"
+            onClick={retirerDesFavoris}
+          >
+            Retirer des favoris
+          </Button>
         )}
-        {props.enFavoris && (
-          <button onClick={retirerDesFavoris} className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded transition-colors">
-            ✖ Retirer des favoris
-          </button>
-        )}
-      </div>
-    </div>
+      </CardActions>
+    </Card>
   );
 }
+
+//Inspiré de https://web3.profinfo.ca/react4/ ET https://codesandbox.io/p/sandbox/github/jaixan/developpementweb3/tree/main/code/chapeaux?file=%2Fsrc%2Fcomponents%2Fpanier.component.tsx%3A13%2C26
+//Quelques modifications ont été apportées par l'IA pour améliorer seulement la visualisation de la page.
