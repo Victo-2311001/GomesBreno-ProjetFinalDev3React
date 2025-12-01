@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-export default function Home() {
+export default function Liste() {
   const [nombreFavoris, setNombreFavoris] = useState(0);
   const { favoris, setFavorisOuvert } = useContext(CombattantContext);
   const [listeCombattants, setListeCombattants] = useState<ICombattant[]>([]);
@@ -37,11 +37,11 @@ export default function Home() {
   };
 
   return (
-    <Box sx={{ minHeight: '100vh', bgcolor: 'grey.100' }}>
+    <Box sx={{ minHeight: '100vh', backgroundImage: "linear-gradient(to bottom, black, red, black)" }}>
       <AppBar position="sticky" color="default" elevation={1}>
         <Toolbar>
           <Typography variant="h6" component="h1" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
-            Combattants UFC
+            Liste des combattants
           </Typography>
           <IconButton
             color="inherit"

@@ -20,7 +20,7 @@ export default function Fiche(props: IFiche) {
   const { favoris, setFavoris, setFavorisOuvert } = useContext(CombattantContext);
 
   const ajouterAuxFavoris = () => {
-    const nouvelles = [
+    const nouveauFavori = [
       ...favoris,
       {
         id: props.combattant.id,
@@ -29,13 +29,13 @@ export default function Fiche(props: IFiche) {
         urlImage: props.combattant.urlImage,
       },
     ];
-    setFavoris(nouvelles);
+    setFavoris(nouveauFavori);
     setFavorisOuvert(true);
   };
 
   const retirerDesFavoris = () => {
-    const nouvelles = favoris.filter((f) => f.id !== props.combattant.id);
-    setFavoris(nouvelles);
+    const nouveauFavori = favoris.filter((f) => f.id !== props.combattant.id);
+    setFavoris(nouveauFavori);
   };
 
 
@@ -110,6 +110,14 @@ export default function Fiche(props: IFiche) {
             fullWidth
             variant="contained"
             onClick={ajouterAuxFavoris}
+            sx={{
+              backgroundColor: "black",
+              color: "red",
+              "&:hover": {
+                backgroundColor: "white",
+              },
+            }}
+
           >
             Ajouter aux favoris
           </Button>
