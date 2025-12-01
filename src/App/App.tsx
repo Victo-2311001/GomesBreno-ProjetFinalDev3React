@@ -2,7 +2,7 @@ import {
   BrowserRouter,
   Routes,
   Route,
-  useParams
+  //useParams
 } from 'react-router-dom';
 
 import CombattantProvider from "../contexts/favoris.context";
