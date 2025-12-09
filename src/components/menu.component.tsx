@@ -37,15 +37,6 @@ export default function Menu() {
             >
               Ajouter combattant
             </Button>
-
-            <Button 
-              color="inherit" 
-              component={Link} 
-              to="/modification"
-              sx={{ textTransform: "none", fontSize: "1rem" }}
-            >
-              Modifier combattant
-            </Button>
           </Box>
         </Toolbar>
       </AppBar>

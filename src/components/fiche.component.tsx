@@ -10,6 +10,7 @@ import {
   Button,
   Box,
 } from '@mui/material';
+import axios from 'axios';
 
 interface IFiche {
   combattant: ICombattant;
@@ -18,12 +19,12 @@ interface IFiche {
 
 export default function Fiche(props: IFiche) {
   const { favoris, setFavoris, setFavorisOuvert } = useContext(CombattantContext);
-
+  console.log("Combattant dans la fiche :", props.combattant._id);
   const ajouterAuxFavoris = () => {
     const nouveauFavori = [
       ...favoris,
       {
-        id: props.combattant.id,
+        id: props.combattant._id,
         nom: props.combattant.nom,
         prenom: props.combattant.prenom,
         urlImage: props.combattant.urlImage,
@@ -34,9 +35,11 @@ export default function Fiche(props: IFiche) {
   };
 
   const retirerDesFavoris = () => {
-    const nouveauFavori = favoris.filter((f) => f.id !== props.combattant.id);
+    const nouveauFavori = favoris.filter((f) => f.id !== props.combattant._id);
     setFavoris(nouveauFavori);
   };
+
+
 
 
   return (
@@ -92,7 +95,7 @@ export default function Fiche(props: IFiche) {
           </Typography>
           <Box sx={{ mt: 1, display: 'flex', gap: 0.5, alignItems: 'center' }}>
             <Typography variant="body2" fontWeight="medium" color="success.main">
-              W: {props.combattant.victoires}
+              W: {props.combattant.victoire}
             </Typography>
             <Typography variant="body2" fontWeight="medium">
               -
@@ -101,7 +104,30 @@ export default function Fiche(props: IFiche) {
               L: {props.combattant.defaites}
             </Typography>
           </Box>
+          <Box sx={{borderTop: 1, borderColor: 'red', mt: 1, pt: 1, display: 'flex', flexDirection: 'row', gap: 17 }}>
+            <a href={`modification/${props.combattant._id}`}>
+              <Typography variant="body2" color="primary">
+                Modifier combattant
+              </Typography>
+            </a>
+
+            <Button
+              onClick={async () => {
+                //https://stackoverflow.com/questions/52034868/confirm-window-in-react
+                const confirmation = window.confirm(`Êtes-vous sûr de vouloir supprimer ${props.combattant.prenom} ${props.combattant.nom}?`);
+                if (confirmation) {
+                  await axios.delete(`https://combattantsapi-hyghhjcae9dcdgav.canadacentral-01.azurewebsites.net/api/combattants/delete/${props.combattant._id}`)
+                  window.location.reload();
+                }
+              }}
+            >
+              <Typography variant="body2" color="error">
+                Supprimer combattant
+              </Typography>
+            </Button>
+          </Box>
         </Box>
+
       </CardContent>
 
       <CardActions sx={{ p: 2, pt: 0 }}>

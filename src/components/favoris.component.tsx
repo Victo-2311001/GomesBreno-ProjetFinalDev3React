@@ -10,6 +10,7 @@ import {
   ListItem,
   ListItemText,
   Paper,
+  CardMedia,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -58,12 +59,19 @@ export default function Favoris() {
                   <ListItemText
                     primary={
                       <Typography variant="subtitle1" fontWeight="medium">
-                        {combattant.prenom} {combattant.nom}
+                        {(combattant as any).urlImage && (
+                          <CardMedia
+                            component="img"
+                            height="48"
+                            image={(combattant as any).urlImage}
+                            sx={{ width: 200, height: 200, objectFit: 'cover', bgcolor: 'grey.200', borderRadius: 1 }}
+                          />
+                        )}
                       </Typography>
                     }
                     secondary={
-                      <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
-                        Cliquez sur la fiche pour plus de détails
+                      <Typography sx={{fontSize: '10', fontWeight: 'bold'}}>
+                        {combattant.prenom} {combattant.nom}
                       </Typography>
                     }
                   />

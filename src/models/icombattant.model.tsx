@@ -1,11 +1,11 @@
-interface IMatchesRecents {
+export interface IMatchesRecents {
   adversaire: string;
   date: Date;
   resultat: string;
 }
 
 export interface ICombattant {
-  id: string;
+  _id: string;
   nom: string;
   prenom: string;
   surnom: string;
@@ -13,7 +13,7 @@ export interface ICombattant {
   age: number;
   nationalite: string;
   categorie: string;
-  victoires: number;
+  victoire: number;
   defaites: number;
   ufcChampion: boolean;
   techniqueFavorite: string[];

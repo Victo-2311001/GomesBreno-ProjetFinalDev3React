@@ -21,7 +21,7 @@ function App() {
           <Route index element={<PagePrincipal />} />
           <Route path="listeTous" element={<CombattantProvider><Liste /></CombattantProvider>} />
           <Route path="ajout" element={<FormulaireAjout />} />
-          //<Route path="modification" element={<FormulaireModification />} />
+          //<Route path="modification/:combattantId" element={<FormulaireModification />} />
         </Route>
       </Routes>
     </BrowserRouter>
