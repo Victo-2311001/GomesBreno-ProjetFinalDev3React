@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -11,11 +11,13 @@ import {
   Select,
   TextField,
   Typography,
-  Paper
+  Paper,
+  Autocomplete
 } from '@mui/material';
-import type { IMatchesRecents } from "../models/icombattant.model";
+import type { ICombattant, IMatchesRecents } from "../models/icombattant.model";
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function FormulaireAjout() {
 
@@ -50,9 +52,25 @@ export default function FormulaireAjout() {
   const [erreursValidationMatchRecents, setErreursValidationMatchRecents] = useState<string[]>([]);
 
   //Champs pour les matchs 
-  const [adversaire, setAdversaire] = useState('');
+  const [adversaire, setAdversaire] = useState<ICombattant | null>();
   const [dateMatch, setDateMatch] = useState('');
   const [resultat, setResultat] = useState('');
+
+  const navigate = useNavigate();
+
+  const [listeCombattants, setListeCombattants] = useState<ICombattant[]>([]);
+
+  //Source pour la liste qui appele les résultats de l'api:
+  //https://stackoverflow.com/questions/71545423/react-autocomplete-calling-api
+  useEffect(() => {
+    axios.get('https://combattantsapi-hyghhjcae9dcdgav.canadacentral-01.azurewebsites.net/api/combattants/all')
+      .then((response) => {
+        setListeCombattants(response.data.combattants);
+      })
+      .catch((error) => {
+        console.error('Erreur pour la récupération des combattants:', error);
+      });
+  }, []);
  
   const validerNom = () => {
     let valide = true;
@@ -148,20 +166,20 @@ export default function FormulaireAjout() {
   };
 
   const ajouterMatch = () => {
-    if (adversaire.length < 1 || dateMatch.length < 1 || resultat.length < 1) {
+    if (!adversaire || dateMatch.length < 1 || resultat.length < 1) {
       alert('Tous les champs du match sont requis');
       return;
     }
 
     const nouveauMatch: IMatchesRecents = {
-      adversaire: adversaire,
+      adversaire: `${adversaire.prenom} ${adversaire.nom}`,
       date: new Date(dateMatch),
       resultat: resultat,
     };
 
     setMatchRecents([...matchRecents, nouveauMatch]);
 
-    setAdversaire('');
+    setAdversaire(null);
     setDateMatch('');
     setResultat('');
   };
@@ -209,6 +227,7 @@ export default function FormulaireAjout() {
         );
 
         alert("Le combattant a été ajouté avec succès !");
+        navigate('/listeTous')
       }
     } catch (error) {
       console.error(error);
@@ -218,7 +237,7 @@ export default function FormulaireAjout() {
 
   return (
     <Box sx={{ maxWidth: 700, mx: "auto", p: 3 }}>
-      <Typography variant="h4" sx={{ mb: 3, fontWeight: "bold" }}>
+      <Typography variant="h4" sx={{ mb: 3, fontWeight: "bold",  color: "red" }}>
         Formulaire d'ajout de combattant
       </Typography>
 
@@ -373,12 +392,16 @@ export default function FormulaireAjout() {
 
         <Box sx={{ display: "grid", gap: 2 }}>
           <Typography>NOM ADVERSAIRE*</Typography>
-          <TextField
+          <Autocomplete
+            options={listeCombattants}
+            getOptionLabel={(option) => `${option.prenom} ${option.nom}`}
             value={adversaire}
-            onChange={(e) => setAdversaire(e.target.value)}
-            placeholder="Nom de l'adversaire"
-            fullWidth
+            onChange={(_, newValue) => setAdversaire(newValue)}
+            renderInput={(params) => (
+              <TextField {...params} label="Adversaire" />
+            )}
           />
+
             
           <Typography>DATE MATCH*</Typography>  
           <TextField

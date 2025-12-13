@@ -107,17 +107,18 @@ export default function Liste() {
 
   return (
     <Box sx={{ minHeight: '100vh', backgroundImage: "linear-gradient(to bottom, black, red, black)" }}>
-      <AppBar position="sticky" color="default" elevation={1}>
+      <AppBar position="sticky" color = "error" elevation={1}>
         <Toolbar>
           <Typography variant="h6" component="h1" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
             Liste des combattants
           </Typography>
      
-          <InputLabel>Catégories</InputLabel>
+          <InputLabel sx={{mr: 2}}>Catégories</InputLabel>
           <Select
             value={filtreCategorie}
             onChange={(e) => setFiltreCategorie(e.target.value)}
             label="Catégorie"
+            sx={{mr: 10}}
           >
             <MenuItem value="Aucune">Aucune</MenuItem>
             <MenuItem value="poids-mouches">Poids-mouches</MenuItem>
@@ -131,11 +132,12 @@ export default function Liste() {
             <MenuItem value="poids-lourds">Poids-lourds</MenuItem>
           </Select>
 
-          <InputLabel>Techniques</InputLabel>
+          <InputLabel sx={{mr: 2}}>Techniques</InputLabel>
           <Select
             value={filtreTechnique}
             onChange={(e) => setFiltreTechnique(e.target.value)}
             label="Technique"
+            sx={{mr: 10}}
           >
             <MenuItem value="Aucune">Aucune</MenuItem>
             <MenuItem value="Jiu-Jitsu">Jiu-Jitsu</MenuItem>
@@ -144,11 +146,12 @@ export default function Liste() {
             <MenuItem value="Kickboxing">Kickboxing</MenuItem>
           </Select>
 
-          <InputLabel>Nationalités</InputLabel>
+          <InputLabel sx={{mr: 2}}>Nationalités</InputLabel>
           <Select
             value={filtreNationalite}
             onChange={(e) => setFiltreNationalite (e.target.value)}
             label="Nationalité"
+            sx={{mr: 10}}
           >
             <MenuItem value="Aucune">Aucune</MenuItem>
             <MenuItem value="BR">BRÉSIL (BR)</MenuItem>
@@ -184,7 +187,7 @@ export default function Liste() {
       <Container maxWidth="xl" sx={{ py: 6 }}>
         <Grid container spacing={3}>
           {listeCombattants && listeCombattants.map((combattant) => (
-            <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={combattant._id}>
+            <Grid size={{ xs: 10, sm: 6, md: 4, lg: 4 }} key={combattant._id}>
               <Fiche combattant={combattant} enFavoris={false} />
             </Grid>
           ))}

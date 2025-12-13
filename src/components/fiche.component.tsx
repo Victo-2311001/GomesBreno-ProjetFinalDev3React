@@ -11,6 +11,7 @@ import {
   Box,
 } from '@mui/material';
 import axios from 'axios';
+import { LoginContext } from '../contexts/login.context';
 
 interface IFiche {
   combattant: ICombattant;
@@ -19,6 +20,8 @@ interface IFiche {
 
 export default function Fiche(props: IFiche) {
   const { favoris, setFavoris, setFavorisOuvert } = useContext(CombattantContext);
+  const { isLoggedIn } = useContext(LoginContext);
+  
   console.log("Combattant dans la fiche :", props.combattant._id);
   const ajouterAuxFavoris = () => {
     const nouveauFavori = [
@@ -39,13 +42,11 @@ export default function Fiche(props: IFiche) {
     setFavoris(nouveauFavori);
   };
 
-
-
-
   return (
     <Card
       sx={{
         height: '100%',
+        minHeight: '300px',
         display: 'flex',
         flexDirection: 'column',
         transition: 'box-shadow 0.3s',
@@ -57,10 +58,10 @@ export default function Fiche(props: IFiche) {
       {(props.combattant as any).urlImage && (
         <CardMedia
           component="img"
-          height="192"
+          height="300"
           image={(props.combattant as any).urlImage}
           alt={`${props.combattant.prenom} ${props.combattant.nom}`}
-          sx={{ objectFit: 'cover', bgcolor: 'grey.200' }}
+          sx={{bgcolor: 'grey.200' }}
         />
       )}
 
@@ -104,28 +105,30 @@ export default function Fiche(props: IFiche) {
               L: {props.combattant.defaites}
             </Typography>
           </Box>
-          <Box sx={{borderTop: 1, borderColor: 'red', mt: 1, pt: 1, display: 'flex', flexDirection: 'row', gap: 17 }}>
-            <a href={`modification/${props.combattant._id}`}>
-              <Typography variant="body2" color="primary">
-                Modifier combattant
-              </Typography>
-            </a>
+          {isLoggedIn && (
+            <Box sx={{borderTop: 1, borderColor: 'red', mt: 1, pt: 1, display: 'flex', flexDirection: 'row', gap: 17 }}>
+              <a href={`modification/${props.combattant._id}`}>
+                <Typography variant="body2" color="primary">
+                  Modifier combattant
+                </Typography>
+              </a>
 
-            <Button
-              onClick={async () => {
-                //https://stackoverflow.com/questions/52034868/confirm-window-in-react
-                const confirmation = window.confirm(`Êtes-vous sûr de vouloir supprimer ${props.combattant.prenom} ${props.combattant.nom}?`);
-                if (confirmation) {
-                  await axios.delete(`https://combattantsapi-hyghhjcae9dcdgav.canadacentral-01.azurewebsites.net/api/combattants/delete/${props.combattant._id}`)
-                  window.location.reload();
-                }
-              }}
-            >
-              <Typography variant="body2" color="error">
-                Supprimer combattant
-              </Typography>
-            </Button>
-          </Box>
+              <Button
+                onClick={async () => {
+                  //https://stackoverflow.com/questions/52034868/confirm-window-in-react
+                  const confirmation = window.confirm(`Êtes-vous sûr de vouloir supprimer ${props.combattant.prenom} ${props.combattant.nom}?`);
+                  if (confirmation) {
+                    await axios.delete(`https://combattantsapi-hyghhjcae9dcdgav.canadacentral-01.azurewebsites.net/api/combattants/delete/${props.combattant._id}`)
+                    window.location.reload();
+                  }
+                }}
+              >
+                <Typography variant="body2" color="error">
+                  Supprimer combattant
+                </Typography>
+              </Button>
+            </Box>
+        )}
         </Box>
 
       </CardContent>

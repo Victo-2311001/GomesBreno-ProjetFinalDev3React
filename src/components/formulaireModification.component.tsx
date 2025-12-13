@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import type { ICombattant } from "../models/icombattant.model";
 import type { IMatchesRecents } from "../models/icombattant.model";
 
@@ -49,6 +49,8 @@ export default function FormulaireModification() {
   const [erreursValidationPrenom, setErreursValidationPrenom] = useState<string[]>([]);
   const [erreursValidationAge, setErreursValidationAge] = useState<string[]>([]);
   const [erreursValidationNationalite, setErreursValidationNationalite] = useState<string[]>([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     chercherCombattantAModifier(combattantId as string);
@@ -205,6 +207,7 @@ export default function FormulaireModification() {
           );
   
           alert("Le combattant a été mis à jour avec succès !");
+          navigate('/listeTous');
         }
       } catch (error) {
         console.error(error);
@@ -218,8 +221,8 @@ export default function FormulaireModification() {
  
   return (
     <Box sx={{ maxWidth: 700, mx: "auto", p: 3 }}>
-      <Typography variant="h4" sx={{ mb: 3, fontWeight: "bold" }}>
-        METTRE À JOUR LE COMBATTANT {combattantAModifier.prenom} {combattantAModifier.nom}
+      <Typography variant="h4" sx={{ mb: 3, fontWeight: "bold", color: "red"  }}>
+        METTRE À JOUR LE COMBATTANT : {combattantAModifier.prenom} {combattantAModifier.nom}
       </Typography>
 
       <Paper sx={{ p: 3, mb: 3, borderRadius: 3, boxShadow: 3 }}>
