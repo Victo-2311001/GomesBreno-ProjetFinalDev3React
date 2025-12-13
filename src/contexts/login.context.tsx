@@ -15,9 +15,14 @@ export const LoginContext = createContext<LoginContextType>({
   logout: () => {},
 });
 
-export default function LoginProvider(props: any) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState('');
+export default function LoginProvider({ children }: { children: React.ReactNode }) {
+   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
+    return localStorage.getItem("isLoggedIn") === "true";
+  });
+
+  const [username, setUsername] = useState<string>(() => {
+    return localStorage.getItem("username") || '';
+  });
 
   async function login(email: string, password: string): Promise<boolean> {
      return axios
@@ -30,10 +35,15 @@ export default function LoginProvider(props: any) {
           setIsLoggedIn(true);
           setUsername(email);
           console.log(isLoggedIn)
+
+          localStorage.setItem("isLoggedIn", "true");
+          localStorage.setItem("username", email);
           return true;
         } else {
           setIsLoggedIn(false);
           setUsername('');
+          localStorage.removeItem("isLoggedIn");
+          localStorage.removeItem("username");
           return false;
         }
       })
@@ -48,9 +58,10 @@ export default function LoginProvider(props: any) {
 
     return (
         <LoginContext.Provider value={values}>
-        {props.children}
+        {children}
         </LoginContext.Provider>
     );
 }
 
 //Inspiré de https://web3.profinfo.ca/authentification/
+//Aide de l'IA pour régler déconnexion involontaire
