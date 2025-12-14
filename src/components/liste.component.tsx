@@ -113,62 +113,68 @@ export default function Liste() {
             Liste des combattants
           </Typography>
      
-          <InputLabel sx={{mr: 2}}>Catégories</InputLabel>
-          <Select
-            value={filtreCategorie}
-            onChange={(e) => setFiltreCategorie(e.target.value)}
-            label="Catégorie"
-            sx={{mr: 10}}
-          >
-            <MenuItem value="Aucune">Aucune</MenuItem>
-            <MenuItem value="poids-mouches">Poids-mouches</MenuItem>
-            <MenuItem value="poids-coqs">Poids-coqs</MenuItem>
-            <MenuItem value="poids-plumes">Poids-plumes</MenuItem>
-            <MenuItem value="poids-légers">Poids-légers</MenuItem>
-            <MenuItem value="poids-welters">Poids-welters</MenuItem>
-            <MenuItem value="poids-mi-moyens">Poids-mi-moyens</MenuItem>
-            <MenuItem value="poids-moyens">Poids-moyens</MenuItem>
-            <MenuItem value="poids-mi-lourds">Poids-mi-lourds</MenuItem>
-            <MenuItem value="poids-lourds">Poids-lourds</MenuItem>
-          </Select>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: { xs: 'column', md: 'row' },
+              gap: 2,
+              alignItems: { md: 'center' },
+              mr: 2,
+            }}
+            >
+            <Box>
+              <InputLabel>Catégories</InputLabel>
+              <Select
+                value={filtreCategorie}
+                onChange={(e) => setFiltreCategorie(e.target.value)}
+                size="small"
+                sx={{ minWidth: 150 }}
+              >
+                <MenuItem value="Aucune">Aucune</MenuItem>
+                <MenuItem value="poids-mouches">Poids-mouches</MenuItem>
+                <MenuItem value="poids-coqs">Poids-coqs</MenuItem>
+                <MenuItem value="poids-plumes">Poids-plumes</MenuItem>
+                <MenuItem value="poids-légers">Poids-légers</MenuItem>
+                <MenuItem value="poids-welters">Poids-welters</MenuItem>
+                <MenuItem value="poids-mi-moyens">Poids-mi-moyens</MenuItem>
+                <MenuItem value="poids-moyens">Poids-moyens</MenuItem>
+                <MenuItem value="poids-mi-lourds">Poids-mi-lourds</MenuItem>
+                <MenuItem value="poids-lourds">Poids-lourds</MenuItem>
+              </Select>
+            </Box>
 
-          <InputLabel sx={{mr: 2}}>Techniques</InputLabel>
-          <Select
-            value={filtreTechnique}
-            onChange={(e) => setFiltreTechnique(e.target.value)}
-            label="Technique"
-            sx={{mr: 10}}
-          >
-            <MenuItem value="Aucune">Aucune</MenuItem>
-            <MenuItem value="Jiu-Jitsu">Jiu-Jitsu</MenuItem>
-            <MenuItem value="Lutte">Lutte</MenuItem>
-            <MenuItem value="Boxe">Boxe</MenuItem>
-            <MenuItem value="Kickboxing">Kickboxing</MenuItem>
-          </Select>
+            <Box>
+              <InputLabel>Techniques</InputLabel>
+              <Select
+                value={filtreTechnique}
+                onChange={(e) => setFiltreTechnique(e.target.value)}
+                size="small"
+                sx={{ minWidth: 150 }}
+              >
+                <MenuItem value="Aucune">Aucune</MenuItem>
+                <MenuItem value="Jiu-Jitsu">Jiu-Jitsu</MenuItem>
+                <MenuItem value="Lutte">Lutte</MenuItem>
+                <MenuItem value="Boxe">Boxe</MenuItem>
+                <MenuItem value="Kickboxing">Kickboxing</MenuItem>
+              </Select>
+            </Box>
 
-          <InputLabel sx={{mr: 2}}>Nationalités</InputLabel>
-          <Select
-            value={filtreNationalite}
-            onChange={(e) => setFiltreNationalite (e.target.value)}
-            label="Nationalité"
-            sx={{mr: 10}}
-          >
-            <MenuItem value="Aucune">Aucune</MenuItem>
-            <MenuItem value="BR">BRÉSIL (BR)</MenuItem>
-            <MenuItem value="CA">CANADA (CA)</MenuItem>
-            <MenuItem value="US">États-Unis (US)</MenuItem>
-            <MenuItem value="FR">France (FR)</MenuItem>
-            <MenuItem value="DE">Allemagne (DE)</MenuItem>
-            <MenuItem value="IT">Italie (IT)</MenuItem>
-            <MenuItem value="ES">Espagne (ES)</MenuItem>
-            <MenuItem value="MX">Mexique (MX)</MenuItem>
-            <MenuItem value="CN">Chine (CN)</MenuItem>
-            <MenuItem value="IN">Inde (IN)</MenuItem>
-            <MenuItem value="JP">Japon (JP)</MenuItem>
-            <MenuItem value="RU">Russie (RU)</MenuItem>
-            <MenuItem value="GB">Royaume-Uni (GB)</MenuItem>
-            <MenuItem value="AU">Australie (AU)</MenuItem>
-          </Select>
+            <Box>
+              <InputLabel>Nationalités</InputLabel>
+              <Select
+                value={filtreNationalite}
+                onChange={(e) => setFiltreNationalite(e.target.value)}
+                size="small"
+                sx={{ minWidth: 150 }}
+              >
+                <MenuItem value="Aucune">Aucune</MenuItem>
+                <MenuItem value="CA">Canada</MenuItem>
+                <MenuItem value="US">États-Unis</MenuItem>
+                <MenuItem value="FR">France</MenuItem>
+                <MenuItem value="BR">Brésil</MenuItem>
+              </Select>
+            </Box>
+          </Box>
                     
           <IconButton
             color="inherit"
@@ -187,7 +193,7 @@ export default function Liste() {
       <Container maxWidth="xl" sx={{ py: 6 }}>
         <Grid container spacing={3}>
           {listeCombattants && listeCombattants.map((combattant) => (
-            <Grid size={{ xs: 10, sm: 6, md: 4, lg: 4 }} key={combattant._id}>
+            <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }} key={combattant._id}>
               <Fiche combattant={combattant} enFavoris={false} />
             </Grid>
           ))}

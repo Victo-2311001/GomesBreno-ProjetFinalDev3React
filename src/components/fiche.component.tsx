@@ -46,22 +46,22 @@ export default function Fiche(props: IFiche) {
     <Card
       sx={{
         height: '100%',
-        minHeight: '300px',
         display: 'flex',
         flexDirection: 'column',
         transition: 'box-shadow 0.3s',
-        '&:hover': {
-          boxShadow: 6,
-        },
+        '&:hover': { boxShadow: 6 },
       }}
     >
       {(props.combattant as any).urlImage && (
         <CardMedia
           component="img"
-          height="300"
           image={(props.combattant as any).urlImage}
           alt={`${props.combattant.prenom} ${props.combattant.nom}`}
-          sx={{bgcolor: 'grey.200' }}
+          sx={{
+            height: { xs: 180, sm: 220, md: 300 },
+            objectFit: 'cover',
+            bgcolor: 'grey.200'
+          }}
         />
       )}
 
@@ -105,30 +105,46 @@ export default function Fiche(props: IFiche) {
               L: {props.combattant.defaites}
             </Typography>
           </Box>
-          {isLoggedIn && (
-            <Box sx={{borderTop: 1, borderColor: 'red', mt: 1, pt: 1, display: 'flex', flexDirection: 'row', gap: 17 }}>
-              <a href={`modification/${props.combattant._id}`}>
-                <Typography variant="body2" color="primary">
-                  Modifier combattant
-                </Typography>
-              </a>
+
+         {isLoggedIn && (
+            <Box
+              sx={{
+                borderTop: 1,
+                borderColor: 'red',
+                mt: 1,
+                pt: 1,
+                display: 'flex',
+                flexDirection: { xs: 'column', sm: 'row' },
+                gap: 1,
+              }}
+            >
+              <Button
+                component="a"
+                href={`modification/${props.combattant._id}`}
+                size="small"
+              >
+                Modifier combattant
+              </Button>
 
               <Button
+                size="small"
+                color="error"
                 onClick={async () => {
-                  //https://stackoverflow.com/questions/52034868/confirm-window-in-react
-                  const confirmation = window.confirm(`Êtes-vous sûr de vouloir supprimer ${props.combattant.prenom} ${props.combattant.nom}?`);
+                  const confirmation = window.confirm(
+                    `Êtes-vous sûr de vouloir supprimer ${props.combattant.prenom} ${props.combattant.nom}?`
+                  );
                   if (confirmation) {
-                    await axios.delete(`https://combattantsapi-hyghhjcae9dcdgav.canadacentral-01.azurewebsites.net/api/combattants/delete/${props.combattant._id}`)
+                    await axios.delete(
+                      `https://combattantsapi-hyghhjcae9dcdgav.canadacentral-01.azurewebsites.net/api/combattants/delete/${props.combattant._id}`
+                    );
                     window.location.reload();
                   }
                 }}
               >
-                <Typography variant="body2" color="error">
-                  Supprimer combattant
-                </Typography>
+                Supprimer combattant
               </Button>
             </Box>
-        )}
+          )}
         </Box>
 
       </CardContent>

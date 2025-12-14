@@ -34,7 +34,8 @@ export default function Login(){
                 height: "100vh",           
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center",    
+                alignItems: "center",  
+                p: 2,  
                 backgroundImage: "linear-gradient(to right, red, black, black, red)"
             }}
         >
@@ -42,13 +43,17 @@ export default function Login(){
             <Box
                 component="form"
                 sx={{
+                    width: { xs: "100%", sm: "400px", md: "450px" },
                     display: "flex",
-                    flexDirection: "column", 
-                    gap: 2,                  
-                    width: "300px",          
+                    flexDirection: "column",
+                    gap: 2,
+                    p: 3,
+                    bgcolor: "white",
+                    borderRadius: 2,
+                    boxShadow: 3
                 }}
             >
-                <Typography sx={{display: "flex", justifyContent: "center", fontSize: "10vh", color: "red"}}>
+                <Typography sx={{display: "flex", justifyContent: "center", fontSize: "5vh", color: "red"}}>
                     Déconnexion
                 </Typography>
 
@@ -56,7 +61,13 @@ export default function Login(){
                     variant="contained"
                     color="primary"
                     size="large"
-                    sx={{ textTransform: "none", fontWeight: "bold", backgroundColor: "red" }}
+                     sx={{
+                        backgroundColor: "black",
+                        color: "red",
+                        "&:hover": { backgroundColor: "red", color: "white" },
+                        mt: 2
+                    }}
+                    fullWidth
                     onClick={() => performLogout()}
                 >
                     Se déconnecter
@@ -76,13 +87,17 @@ export default function Login(){
             <Box
                 component="form"
                 sx={{
+                    width: { xs: "100%", sm: "400px", md: "450px" },
                     display: "flex",
-                    flexDirection: "column", 
-                    gap: 2,                  
-                    width: "300px",          
+                    flexDirection: "column",
+                    gap: 2,
+                    p: 3,
+                    bgcolor: "white",
+                    borderRadius: 2,
+                    boxShadow: 3
                 }}
             >
-                <Typography sx={{display: "flex", justifyContent: "center", fontSize: "10vh", color: "red"}}>
+                <Typography sx={{display: "flex", justifyContent: "center", fontSize: "7vh", color: "red"}}>
                     Connexion
                 </Typography>
 

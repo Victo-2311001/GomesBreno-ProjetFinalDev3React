@@ -1,7 +1,9 @@
-import { AppBar, Toolbar, Button, Box, Typography } from "@mui/material";
+import { AppBar, Toolbar, Button, Box, Typography, IconButton } from "@mui/material";
 import { useContext } from "react";
 import { Outlet, Link } from "react-router-dom";
 import { LoginContext } from "../contexts/login.context";
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export default function Menu() {
   const { isLoggedIn } = useContext(LoginContext);
@@ -9,8 +11,23 @@ export default function Menu() {
   return (
     <>
       <AppBar  position="static" elevation={0}>
-        <Toolbar sx={{ display: "flex", justifyContent: "space-between", backgroundImage: "linear-gradient(to right, red, black, red, black)"}}>
-          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+        <Toolbar sx={{
+            backgroundImage: "linear-gradient(to right, red, black, red, black)",
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" }, 
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: 1,
+            py: 1
+          }}
+        >
+          <Typography variant="h6" 
+          sx={{
+              fontWeight: "bold",
+              textAlign: { xs: "center", sm: "left" },
+              width: { xs: "100%", sm: "auto" }
+            }}
+          >
             COMBATTANTS MMA
           </Typography>
   
@@ -61,7 +78,9 @@ export default function Menu() {
                 to="/login"
                 sx={{ textTransform: "none", fontSize: "1rem" }}
               >
-                Déconnecter
+                <IconButton sx={{color: "red"}}>
+                  <LogoutIcon />
+                </IconButton>
               </Button>
             ) : (
               <Button 
@@ -70,9 +89,12 @@ export default function Menu() {
                   to="/login"
                   sx={{ textTransform: "none", fontSize: "1rem" }}
                 >
-                  Connecter
+                  <IconButton sx={{color: "green"}}>
+                    <LoginIcon />
+                  </IconButton>
               </Button>
             )}
+            
           </Box>
         </Toolbar>
       </AppBar>
