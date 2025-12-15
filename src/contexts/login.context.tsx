@@ -17,7 +17,7 @@ export const LoginContext = createContext<LoginContextType>({
 
 export default function LoginProvider({ children }: { children: React.ReactNode }) {
    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
-    return localStorage.getItem("isLoggedIn") === "true";
+    return localStorage.getItem("isLoggedIn") == "true";
   });
 
   const [username, setUsername] = useState<string>(() => {
@@ -64,4 +64,4 @@ export default function LoginProvider({ children }: { children: React.ReactNode 
 }
 
 //Inspiré de https://web3.profinfo.ca/authentification/
-//Aide de l'IA pour régler déconnexion involontaire
+//Aide de l'IA pour régler déconnexion involontaire (localStorage).

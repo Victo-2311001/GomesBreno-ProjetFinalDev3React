@@ -49,62 +49,30 @@ export default function Liste() {
   }, []);
 
   useEffect(() => {
-    if (filtreNationalite !== "Aucune") {
-      axios.get(`https://combattantsapi-hyghhjcae9dcdgav.canadacentral-01.azurewebsites.net/api/combattants/nationalite/${filtreNationalite}`).then((response) => {
-      setListeCombattants(response.data.combattants);
-      //setFiltreTechnique("Aucune");
-      //setFiltreCategorie("Aucune");
-    })
-    .catch((error) => {
-      console.error('Erreur lors de la récupération des combattants par nationalité:', error);
-    });;
-    }else{
-      axios.get('https://combattantsapi-hyghhjcae9dcdgav.canadacentral-01.azurewebsites.net/api/combattants/all').then((response) => {
-        setListeCombattants(response.data.combattants);
-      })
-    }
-  }, [filtreNationalite]);
+    let url = "/api/combattants/all";
 
-  useEffect(() => {
-    if (filtreCategorie !== "Aucune") {
-      axios.get(`https://combattantsapi-hyghhjcae9dcdgav.canadacentral-01.azurewebsites.net/api/combattants/categorie/${filtreCategorie}`).then((response) => {
-      setListeCombattants(response.data.combattants);
-      //setFiltreNationalite("Aucune");
-      //setFiltreTechnique("Aucune");
-    })
-    .catch((error) => {
-      console.error('Erreur lors de la récupération des combattants par catégorie:', error);
-    });;
-    }else{
-      axios.get('https://combattantsapi-hyghhjcae9dcdgav.canadacentral-01.azurewebsites.net/api/combattants/all').then((response) => {
-        setListeCombattants(response.data.combattants);
-      })
+    if (filtreNationalite != "Aucune") {
+      url = `/api/combattants/nationalite/${filtreNationalite}`;
+    } else if (filtreCategorie != "Aucune") {
+      url = `/api/combattants/categorie/${filtreCategorie}`;
+    } else if (filtreTechnique != "Aucune") {
+      url = `/api/combattants/technique/${filtreTechnique}`;
     }
-  }, [filtreCategorie]);
 
-  useEffect(() => {
-    if (filtreTechnique !== "Aucune") {
-      axios.get(`https://combattantsapi-hyghhjcae9dcdgav.canadacentral-01.azurewebsites.net/api/combattants/technique/${filtreTechnique}`).then((response) => {
-      setListeCombattants(response.data.combattants);
-      //setFiltreNationalite("Aucune");
-      //setFiltreCategorie("Aucune");
-    })
-    .catch((error) => {
-      console.error('Erreur lors de la récupération des combattants par technique:', error);
-    });;
-    }else{
-      axios.get('https://combattantsapi-hyghhjcae9dcdgav.canadacentral-01.azurewebsites.net/api/combattants/all').then((response) => {
+    axios.get(`https://combattantsapi-hyghhjcae9dcdgav.canadacentral-01.azurewebsites.net${url}`).then((response) => {
         setListeCombattants(response.data.combattants);
       })
-    } 
-  }, [filtreTechnique]);
+      .catch((error) => {
+        console.error('Erreur lors de la récupération des combattants:', error);
+      });
+
+  }, [filtreNationalite, filtreCategorie, filtreTechnique]);
 
   const toggleFavoris = async (event: React.MouseEvent) => {
     event.preventDefault();
     setFavorisOuvert(true);
   };
  
-
   return (
     <Box sx={{ minHeight: '100vh', backgroundImage: "linear-gradient(to bottom, black, red, black)" }}>
       <AppBar position="sticky" color = "error" elevation={1}>
@@ -126,7 +94,11 @@ export default function Liste() {
               <InputLabel>Catégories</InputLabel>
               <Select
                 value={filtreCategorie}
-                onChange={(e) => setFiltreCategorie(e.target.value)}
+                onChange={(e) => {
+                  setFiltreCategorie(e.target.value);
+                  setFiltreNationalite("Aucune");
+                  setFiltreTechnique("Aucune");
+                }}
                 size="small"
                 sx={{ minWidth: 150 }}
               >
@@ -147,7 +119,11 @@ export default function Liste() {
               <InputLabel>Techniques</InputLabel>
               <Select
                 value={filtreTechnique}
-                onChange={(e) => setFiltreTechnique(e.target.value)}
+                onChange={(e) => {
+                  setFiltreTechnique(e.target.value);
+                  setFiltreCategorie("Aucune");
+                  setFiltreNationalite("Aucune");
+                }}
                 size="small"
                 sx={{ minWidth: 150 }}
               >
@@ -163,7 +139,11 @@ export default function Liste() {
               <InputLabel>Nationalités</InputLabel>
               <Select
                 value={filtreNationalite}
-                onChange={(e) => setFiltreNationalite(e.target.value)}
+                onChange={(e) => {
+                  setFiltreNationalite(e.target.value);
+                  setFiltreCategorie("Aucune");
+                  setFiltreTechnique("Aucune");
+                }}
                 size="small"
                 sx={{ minWidth: 150 }}
               >

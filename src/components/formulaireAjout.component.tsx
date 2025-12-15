@@ -185,7 +185,8 @@ export default function FormulaireAjout() {
   };
 
   const supprimerMatch = (index: number) => {
-    const nouveauxMatchs = matchRecents.filter((_, i) => i !== index);
+    //Aide de l'IA pour régler problème
+    const nouveauxMatchs = matchRecents.filter((_, i) => i != index);
     setMatchRecents(nouveauxMatchs);
   };
 
@@ -396,7 +397,7 @@ export default function FormulaireAjout() {
             options={listeCombattants}
             getOptionLabel={(option) => `${option.prenom} ${option.nom}`}
             value={adversaire}
-            onChange={(_, newValue) => setAdversaire(newValue)}
+            onChange={(_, adversaireSelectionne) => setAdversaire(adversaireSelectionne)}
             renderInput={(params) => (
               <TextField {...params} label="Adversaire" />
             )}
